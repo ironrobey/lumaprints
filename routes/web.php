@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'ScrapeController@index');
 Route::get('/scrape', 'ScrapeController@store');
-// Route::get('/listings/{listing}', 'ListingController@show');
 Route::get('/listings/export/', 'ListingController@export');
+Route::get('/shops/export/', 'ShopController@export');

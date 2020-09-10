@@ -7,7 +7,8 @@
 </head>
 <body>
 	<form action="/scrape">
-		<input type="text" name="url" placeholder="https://www.etsy.com/search?q=art+prints&ref=pagination&page=2">
+		<input type="text" name="url" value="https://www.etsy.com/search?q=art+prints">
+		{{-- <input type="text" name="pages" value="20"> --}}
 		<input type="submit">		
 	</form>
 </body>

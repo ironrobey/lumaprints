@@ -12,11 +12,7 @@ class ListingController extends Controller
 
     public function export()
     {
-        return Excel::download(new ListingsExport, 'listings.xlsx');
-    }
-
-    public function show(Listings $listing){
-        dd($listing->shop);
+        return Excel::download(new ListingsExport, 'listings.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 
 }

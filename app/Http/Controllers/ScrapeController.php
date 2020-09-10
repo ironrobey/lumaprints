@@ -19,7 +19,11 @@ class ScrapeController extends Controller
 
     public function store(){
     	$url = request()->url;
-        $this->checker($url);
+        // $pages = request()->pages;
+        // for($i=0;$i<=$pages;$i++){
+        //     $this->checker($url.'&pages='.$i);    
+        // }
+        $this->checker($url);    
     }
 
     public function checker( $url ){
