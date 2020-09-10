@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'ScrapeController@index');
-Route::post('/scrape', 'ScrapeController@store');
+Route::get('/scrape', 'ScrapeController@store');
