@@ -8,7 +8,6 @@
 <body>
 	<form action="/scrape">
 		<input type="text" name="url" placeholder="https://www.etsy.com/search?q=art+prints&ref=pagination&page=2">
-		<input type="text" name="pages" placeholder="20">
 		<input type="submit">		
 	</form>
 </body>

@@ -18,7 +18,7 @@ class Listings extends Model
     ];
 
     public function shop(){
-    	return $this->belongsTo('App\Shops');
+    	return $this->belongsTo('App\Shops', 'shops_id');
     }
 
 

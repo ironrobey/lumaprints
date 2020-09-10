@@ -31,10 +31,18 @@ trait CleanUpTraits {
 
 		$listing_card_info = $listing_card->find('.v2-listing-card__info')[0];
 		
-		$price = trim($listing_card_info->find('.n-listing-card__price .currency-value')[0]->innertext);
-		$price = str_replace(',', '', $price);
+		$price = 0;	
+		if($listing_card_info->find('.n-listing-card__price .currency-value')){
+			$price = trim($listing_card_info->find('.n-listing-card__price .currency-value')[0]->innertext);
+			$price = str_replace(',', '', $price);
+		}
 		$listing['price'] = $price;
-		$listing['currency'] = trim($listing_card_info->find('.n-listing-card__price .currency-symbol')[0]->innertext);
+
+		$currency = '';
+		if($listing_card_info->find('.n-listing-card__price .currency-symbol')){
+			$currency = trim($listing_card_info->find('.n-listing-card__price .currency-symbol')[0]->innertext);
+		}
+		$listing['currency'] = $currency;
 
     	$shop = trim($listing_card_info->find('.v2-listing-card__shop .screen-reader-only')[0]->innertext);
         $remove_from_shop = array('Ad from shop ', 'From shop ');

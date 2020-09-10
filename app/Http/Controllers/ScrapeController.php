@@ -13,53 +13,43 @@ class ScrapeController extends Controller
 {
     use CleanUpTraits;
 
-    protected $max_pages = 30;
-
     public function index(){
     	return view('index');
     }
 
     public function store(){
     	$url = request()->url;
-    	$pages = request()->pages;
-
-    	for($i=0;$i<=$pages;$i++){
-            $dom = $this->dom($url.'&page='.$i);
-
-            $children = $dom->find('ul.responsive-listing-grid', 0)->children();
-
-    		foreach($children as $listing_card){
-
-                $listing = $this->listingInfo( $listing_card );
-
-                if( !$listing ) continue;
-                if( Listings::where( 'name', $listing['name'] )->exists() ) continue;
-
-		    	$shop = Shops::where('name', $listing['shop']);
-
-		    	if(!$shop->exists()){
-                    $shop_url = $this->shopUrl($listing['url']);
-                    $shop_details = $this->shopDetails($shop_url, $listing['shop']);
-                    $shop = Shops::create($shop_details);
-                    $shop->addListing($listing);
-		    	} else {
-                    $shop->first()->addListing($listing);    
-                } 
-                // sleep(5);
-    		}
-
-            if( $i==MAX_PAGES ){
-
-            }
-
-            // sleep(100);
-    	}
+        $this->checker($url);
     }
 
-    public function show(){
-        $shopDom = $this->dom('https://www.etsy.com/shop/CeladonCreating');
-
-        $sales = str_replace(' Sales', '', strip_tags($shopDom->find('.shop-info div', 1)->children(0)));
-        dd($sales);
+    public function checker( $url ){
+        $dom = $this->dom($url);
+        if( $dom->find('ul.responsive-listing-grid', 0) != null ){
+            $this->parse( $dom->find('ul.responsive-listing-grid', 0)->children() );
+        } else {
+            $this->checker($url);
+        }
     }
+
+    public function parse($children){
+        foreach($children as $listing_card){
+
+            $listing = $this->listingInfo( $listing_card );
+
+            if( !$listing ) continue;
+            if( Listings::where( 'name', $listing['name'] )->exists() ) continue;
+
+            $shop = Shops::where('name', $listing['shop']);
+
+            if(!$shop->exists()){
+                $shop_url = $this->shopUrl($listing['url']);
+                $shop_details = $this->shopDetails($shop_url, $listing['shop']);
+                $shop = Shops::create($shop_details);
+                $shop->addListing($listing);
+            } else {
+                $shop->first()->addListing($listing);    
+            } 
+        }
+    }
+
 }
