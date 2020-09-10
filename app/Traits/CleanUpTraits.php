@@ -14,7 +14,6 @@ trait CleanUpTraits {
 	    $response = Http::get($url);
     	$output = json_decode($response);
     	$output = $output->output;
-    	sleep(90);
     	return HtmlDomParser::str_get_html($output->listingCards);
     }
 
